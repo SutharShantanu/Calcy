@@ -28,7 +28,6 @@ const Homepage = () => {
     const displayValue = useSelector(
         (state) => state.calculatorReducer.displayValue
     );
-    const operator = useSelector((state) => state.calculatorReducer.operator);
     const history = useSelector((state) => state.calculatorReducer.history);
     const dispatch = useDispatch();
 
@@ -42,7 +41,7 @@ const Homepage = () => {
                 break;
             case "%":
             case "/":
-            case "*":
+            case "x":
             case "+":
             case "-":
                 dispatch(setOperator(key));
@@ -62,26 +61,6 @@ const Homepage = () => {
         }
     };
 
-    // Calculate the real-time expression to display in the input field
-    let realTimeExpression = displayValue;
-    if (operator) {
-        realTimeExpression =
-            displayValue === "0"
-                ? ""
-                : displayValue + " " + getOperatorSymbol(operator);
-    }
-
-    // Calculate the full expression to display in history
-    const fullExpression = history.reduce(
-        (expression, step) =>
-            expression +
-            " " +
-            (step.operatorIcon
-                ? getOperatorSymbol(step.operatorIcon)
-                : step.expression),
-        ""
-    );
-
     return (
         <div className="border-2 border-red-600 rounded-2xl p-3 h-90 my-10 mx-auto box-border w-4/5">
             <h1 className="font-mono text-5xl font-bold text-center my-3">
@@ -91,28 +70,14 @@ const Homepage = () => {
                 <div className="w-2/3 p-3 mr-4 outline-none text-5xl bg-slate-100 rounded-2xl overflow-auto">
                     <div className="h-2/4 border-2 border-blue-950 p-3 outline-none text-5xl bg-slate-100 rounded-2xl overflow-auto">
                         {history.map((step, index) => (
-                            <div
-                                key={index}
-                                className="text-slate-400 text-2xl">
-                                <span>
-                                    {step.operatorIcon ? (
-                                        <FontAwesomeIcon
-                                            icon={step.operatorIcon}
-                                        />
-                                    ) : (
-                                        step.expression
-                                    )}
-                                </span>
+                            <div key={index} className="text-slate-400 text-2xl">
+                                <span>{step}</span>
                             </div>
                         ))}
-                        <div className="text-slate-400 text-2xl">
-                            
-                            {fullExpression}
-                        </div>
                     </div>
                     <input
                         type="text"
-                        className="h-2/4 w-full border-2 border-red-400 p-3 outline-none text-5xl bg-slate-100 rounded-2xl"
+                        className=" h-2/4 w-full border-2 border-red-400 p-3 outline-none text-5xl bg-slate-100 rounded-2xl"
                         autoFocus
                         dir="rtl"
                         value={displayValue}
@@ -131,7 +96,7 @@ const Homepage = () => {
                     <Key key_name="7" onClick={() => handleKeyPress("7")} />
                     <Key key_name="8" onClick={() => handleKeyPress("8")} />
                     <Key key_name="9" onClick={() => handleKeyPress("9")} />
-                    <Key onClick={() => handleKeyPress("*")}>
+                    <Key onClick={() => handleKeyPress("x")}>
                         <FontAwesomeIcon icon={faXmark} />
                     </Key>
                     <Key key_name="4" onClick={() => handleKeyPress("4")} />
@@ -161,20 +126,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-
-const getOperatorSymbol = (operator) => {
-    switch (operator) {
-        case faPlus:
-            return "+";
-        case faMinus:
-            return "-";
-        case faXmark:
-            return "*";
-        case faDivide:
-            return "/";
-        case faPercent:
-            return "%";
-        default:
-            return "";
-    }
-};

@@ -1,11 +1,5 @@
+// calculatorReducer.js
 
-import {
-    faPlus,
-    faMinus,
-    faXmark,
-    faDivide,
-    faPercent,
-} from "@fortawesome/free-solid-svg-icons";
 import * as actionTypes from "./ActionType";
 
 const initialState = {
@@ -68,18 +62,13 @@ const calculatorReducer = (state = initialState, action) => {
                     " " +
                     state.displayValue;
                 const result = new Function("return " + expression)();
-                const operatorIcon = getOperatorIcon(state.operator);
-
                 return {
                     ...state,
                     displayValue: String(result),
                     operator: null,
                     prevValue: null,
                     result,
-                    history: [
-                        ...state.history,
-                        { expression, operatorIcon, result },
-                    ],
+                    history: [...state.history, expression, "= " + result],
                 };
             }
 
@@ -101,23 +90,5 @@ const calculatorReducer = (state = initialState, action) => {
             return state;
     }
 };
-
-const getOperatorIcon = (operator) => {
-    switch (operator) {
-        case "+":
-            return faPlus;
-        case "-":
-            return faMinus;
-        case "*": 
-            return faXmark;
-        case "/":
-            return faDivide;
-        case "%":
-            return faPercent;
-        default:
-            return null;
-    }
-};
-
 
 export default calculatorReducer;
