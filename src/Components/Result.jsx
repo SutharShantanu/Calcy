@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Result = () => {
   return (
@@ -6,4 +6,4 @@ const Result = () => {
   )
 }
 
-export default Result
+export default Result;

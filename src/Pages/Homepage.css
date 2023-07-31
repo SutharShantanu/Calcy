@@ -1,0 +1,28 @@
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+/* Homepage.css */
+
+/* Custom styles for the input */
+input[type="number"] {
+  /* Hide the increment and decrement buttons */
+  appearance: textfield;
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* Hide increment and decrement buttons for WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Align the content to the right in the input box */
+input[type="number"] {
+  text-align: right;
+}
